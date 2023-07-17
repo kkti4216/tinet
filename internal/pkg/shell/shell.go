@@ -502,6 +502,14 @@ func HostLinkUp(linkName string) (linkUpCmd string) {
 	return linkUpCmd
 }
 
+// HostLinkUp Link up link of host
+func HostBridgeUp(linkName string) (linkUpCmd string) {
+
+	linkUpCmd = fmt.Sprintf("ip link set dev %s up", linkName)
+
+	return linkUpCmd
+}
+
 // NetnsLinkUp Link up link of netns
 func NetnsLinkUp(netnsName string, linkName string) (netnsLinkUpCmd string) {
 
@@ -523,7 +531,7 @@ func (bridge *Switch) CreateSwitch() (createSwitchCmds []string) {
 	addSwitchCmd := fmt.Sprintf("ovs-vsctl add-br %s", bridge.Name)
 	createSwitchCmds = append(createSwitchCmds, addSwitchCmd)
 
-	bridgeUpCmd := HostLinkUp(bridge.Name)
+	bridgeUpCmd := HostBridgeUp(bridge.Name)
 	createSwitchCmds = append(createSwitchCmds, bridgeUpCmd)
 
 	return createSwitchCmds
